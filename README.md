@@ -1,37 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinTracker
 
-## Getting Started
+Next.js frontend + Django backend (Admin + DRF + JWT).
 
-First, run the development server:
+## Project Structure
+
+- `src/` - Next.js App Router frontend
+- `backend/` - Django backend with models, admin, and REST API
+
+## 1) Run Django backend
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_finance
+python manage.py createsuperuser
+python manage.py runserver
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Backend URLs:
+- Admin: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+- JWT token: `POST http://127.0.0.1:8000/api/auth/token/`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 2) Run Next.js frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+In a second terminal:
 
-## Learn More
+```bash
+cd /Users/marko/Desktop/Projects/FInTracker
+npm install
+DJANGO_BASE_URL=http://127.0.0.1:8000 npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Frontend URL:
+- [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- Login page: [http://127.0.0.1:3000/login](http://127.0.0.1:3000/login)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Use the same Django superuser credentials in Next.js login form.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Endpoints (authenticated with JWT)
 
-## Deploy on Vercel
+- `POST /api/auth/token/`
+- `POST /api/auth/token/refresh/`
+- `GET /api/dashboard/overview/`
+- `GET,POST /api/budgets/`
+- `GET,POST /api/transactions/`
+- `GET /api/card-activities/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Useful backend commands
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# FinTracker
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py seed_finance
+python manage.py check
+```

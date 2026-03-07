@@ -1,64 +1,67 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+const highlights = [
+  { title: "Smart Walleting", text: "Track balances, budgets and goals in one clean workspace." },
+  { title: "Card Control", text: "Monitor card activity, usage history and recurring charges." },
+  { title: "Live Insights", text: "See charted trends for income, expenses and savings growth." },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-[var(--color-shell)]">
+      <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-6 md:px-6">
+        <div className="flex items-center gap-2">
+          <div className="size-8 rounded-full bg-[var(--color-accent)]" />
+          <span className="text-base font-semibold text-[var(--color-title)]">Ringku</span>
+        </div>
+        <nav className="flex items-center gap-2">
+          <Link
+            href="/login"
+            className="rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm text-[var(--color-title)]"
+          >
+            Open App
+          </Link>
+        </nav>
+      </header>
+
+      <main className="mx-auto grid w-full max-w-[1200px] gap-6 px-4 pb-10 md:px-6 lg:grid-cols-[1.1fr_1fr]">
+        <section className="rounded-3xl bg-[var(--color-panel)] p-6 shadow-[0_18px_55px_rgba(13,16,28,0.12)] md:p-10">
+          <p className="text-sm font-medium text-[var(--color-accent)]">Financial web app</p>
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-[var(--color-title)] md:text-5xl">
+            Full dashboard website based on your Figma template.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-4 max-w-[55ch] text-sm leading-7 text-[var(--color-soft)]">
+            A complete multi-page finance interface on Next.js and Tailwind with separate dashboard routes, responsive
+            layout, cards, charting block and transactions table.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href="/login" className="rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-medium text-white">
+              Sign in
+            </Link>
+            <a
+              href="https://www.figma.com/design/IwKhCWtMoKkZOsdONHWKpi/Ringku---Financial-Web-App-and-Mobile-App--Community-"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-[var(--color-border)] bg-white px-5 py-3 text-sm font-medium text-[var(--color-title)]"
+            >
+              Open Template
+            </a>
+          </div>
+        </section>
+
+        <section className="grid gap-4">
+          {highlights.map((item) => (
+            <article key={item.title} className="rounded-2xl border border-[var(--color-border)] bg-white p-5">
+              <h2 className="text-lg font-semibold text-[var(--color-title)]">{item.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-[var(--color-soft)]">{item.text}</p>
+            </article>
+          ))}
+          <article className="rounded-2xl bg-[var(--color-sidebar)] p-6 text-slate-100">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Status</p>
+            <p className="mt-2 text-2xl font-bold">Project scaffold ready</p>
+            <p className="mt-2 text-sm text-slate-300">Structure prepared for backend/API integration next.</p>
+          </article>
+        </section>
       </main>
     </div>
   );
