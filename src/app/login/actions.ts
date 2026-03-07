@@ -13,18 +13,27 @@ export async function loginAction(formData: FormData) {
     redirect("/login?error=missing");
   }
 
-  const response = await fetch(`${DJANGO_BASE_URL}/api/auth/token/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-    cache: "no-store",
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${DJANGO_BASE_URL}/api/auth/token/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+      cache: "no-store",
+    });
+  } catch {
+    redirect("/login?error=backend");
+  }
 
   if (!response.ok) {
     redirect("/login?error=invalid");
   }
 
-  const data = (await response.json()) as { access: string; refresh: string };
+  const data = (await response.json()) as { access?: string; refresh?: string };
+  if (!data.access || !data.refresh) {
+    redirect("/login?error=backend");
+  }
+
   await setAuthCookies(data.access, data.refresh);
   redirect("/dashboard");
 }

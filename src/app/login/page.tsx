@@ -14,7 +14,11 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   }
 
   const params = searchParams ? await searchParams : undefined;
-  const hasError = params?.error === "invalid" || params?.error === "missing";
+  const hasError = params?.error === "invalid" || params?.error === "missing" || params?.error === "backend";
+  const errorMessage =
+    params?.error === "backend"
+      ? "Backend is unavailable. Start Django server on http://127.0.0.1:8000."
+      : "Invalid username or password.";
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--color-shell)] p-4">
@@ -24,7 +28,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
         {hasError && (
           <p className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-600">
-            Invalid username or password.
+            {errorMessage}
           </p>
         )}
 
