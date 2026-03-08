@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from .models import Budget, CardActivity, Transaction, Wallet
 
@@ -38,3 +40,28 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ["id", "name", "type", "txDate", "status", "amount"]
+
+
+class RegisterUserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8, validators=[validate_password])
+    confirmPassword = serializers.CharField(write_only=True, min_length=8)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password", "confirmPassword"]
+        extra_kwargs = {
+            "email": {"required": False, "allow_blank": True},
+        }
+
+    def validate(self, attrs):
+        if attrs["password"] != attrs["confirmPassword"]:
+            raise serializers.ValidationError({"confirmPassword": "Passwords do not match."})
+        return attrs
+
+    def create(self, validated_data):
+        validated_data.pop("confirmPassword")
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user

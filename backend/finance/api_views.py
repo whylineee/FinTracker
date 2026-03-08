@@ -1,10 +1,11 @@
 from decimal import Decimal
 from rest_framework import generics
+from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Budget, CardActivity, Transaction, Wallet
-from .serializers import BudgetSerializer, CardActivitySerializer, TransactionSerializer, WalletSerializer
+from .serializers import BudgetSerializer, CardActivitySerializer, RegisterUserSerializer, TransactionSerializer, WalletSerializer
 
 
 def get_primary_wallet():
@@ -68,3 +69,8 @@ class CardActivityListApi(generics.ListAPIView):
     serializer_class = CardActivitySerializer
     permission_classes = [IsAuthenticated]
     queryset = CardActivity.objects.order_by("-tx_date", "-id")
+
+
+class RegisterUserApi(generics.CreateAPIView):
+    serializer_class = RegisterUserSerializer
+    permission_classes = [AllowAny]
