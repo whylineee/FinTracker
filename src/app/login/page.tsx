@@ -4,7 +4,7 @@ import { loginAction } from "@/app/login/actions";
 import { getAccessToken } from "@/lib/auth";
 
 type LoginPageProps = {
-  searchParams?: Promise<{ error?: string }>;
+  searchParams?: Promise<{ error?: string; registered?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
@@ -15,6 +15,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
   const params = searchParams ? await searchParams : undefined;
   const hasError = params?.error === "invalid" || params?.error === "missing" || params?.error === "backend";
+  const isRegistered = params?.registered === "1";
   const errorMessage =
     params?.error === "backend"
       ? "Backend is unavailable. Start Django server on http://127.0.0.1:8000."
@@ -23,8 +24,26 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--color-shell)] p-4">
       <section className="w-full max-w-[420px] rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-[0_18px_55px_rgba(13,16,28,0.12)]">
-        <h1 className="text-2xl font-bold text-[var(--color-title)]">Sign in</h1>
-        <p className="mt-1 text-sm text-[var(--color-soft)]">Use your Django admin credentials.</p>
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-shell)] p-1 text-sm">
+          <div className="grid grid-cols-2 gap-1">
+            <span className="rounded-lg bg-white px-3 py-2 text-center font-semibold text-[var(--color-title)]">Sign in</span>
+            <Link
+              href="/register"
+              className="rounded-lg px-3 py-2 text-center font-medium text-[var(--color-soft)] transition hover:bg-white hover:text-[var(--color-title)]"
+            >
+              Register
+            </Link>
+          </div>
+        </div>
+
+        <h1 className="mt-5 text-2xl font-bold text-[var(--color-title)]">Sign in</h1>
+        <p className="mt-1 text-sm text-[var(--color-soft)]">Use your account credentials.</p>
+
+        {isRegistered && (
+          <p className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+            Account created. You can sign in now.
+          </p>
+        )}
 
         {hasError && (
           <p className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-600">
