@@ -23,6 +23,7 @@ python manage.py runserver
 Backend URLs:
 - Admin: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 - JWT token: `POST http://127.0.0.1:8000/api/auth/token/`
+- Register: `POST http://127.0.0.1:8000/api/auth/register/`
 
 ## 2) Run Next.js frontend
 
@@ -37,13 +38,15 @@ DJANGO_BASE_URL=http://127.0.0.1:8000 npm run dev
 Frontend URL:
 - [http://127.0.0.1:3000](http://127.0.0.1:3000)
 - Login page: [http://127.0.0.1:3000/login](http://127.0.0.1:3000/login)
+- Register page: [http://127.0.0.1:3000/register](http://127.0.0.1:3000/register)
 
-Use the same Django superuser credentials in Next.js login form.
+Use your existing account credentials, or create a new account at `/register`.
 
 ## API Endpoints (authenticated with JWT)
 
 - `POST /api/auth/token/`
 - `POST /api/auth/token/refresh/`
+- `POST /api/auth/register/`
 - `GET /api/dashboard/overview/`
 - `GET,POST /api/budgets/`
 - `GET,POST /api/transactions/`
