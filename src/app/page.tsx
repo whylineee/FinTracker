@@ -14,13 +14,21 @@ export default function HomePage() {
           <div className="size-8 rounded-full bg-[var(--color-accent)]" />
           <span className="text-base font-semibold text-[var(--color-title)]">Ringku</span>
         </div>
-        <nav className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className="rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm text-[var(--color-title)]"
-          >
-            Open App
-          </Link>
+        <nav className="rounded-full border border-[var(--color-border)] bg-white/80 p-1 shadow-[0_10px_30px_rgba(13,16,28,0.08)] backdrop-blur">
+          <div className="flex items-center gap-1">
+            <Link
+              href="/login"
+              className="rounded-full bg-[var(--color-sidebar)] px-4 py-2 text-sm font-medium text-white transition hover:brightness-110"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/register"
+              className="rounded-full px-4 py-2 text-sm font-medium text-[var(--color-title)] transition hover:bg-[var(--color-shell)]"
+            >
+              Create account
+            </Link>
+          </div>
         </nav>
       </header>
 
@@ -37,6 +45,12 @@ export default function HomePage() {
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/login" className="rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-medium text-white">
               Sign in
+            </Link>
+            <Link
+              href="/register"
+              className="rounded-full border border-[var(--color-border)] bg-white px-5 py-3 text-sm font-medium text-[var(--color-title)]"
+            >
+              Register
             </Link>
             <a
               href="https://www.figma.com/design/IwKhCWtMoKkZOsdONHWKpi/Ringku---Financial-Web-App-and-Mobile-App--Community-"
